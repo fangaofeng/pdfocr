@@ -1,0 +1,7 @@
+# python
+.cache
+*.py[co]
+.pytest_cache
+__pycache__
+*.egg-info
+.ipynb_checkpoints
