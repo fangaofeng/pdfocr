@@ -2,9 +2,10 @@
 .cache
 *.py[co]
 .pytest_cache
-/__pycache__
+__pycache__
 *.egg-info
+.ipynb_checkpoints
 .ipynb_checkpoints/*
 temp
-/.ipynb_checkpoints
+
 
