@@ -10,5 +10,5 @@ filename="test.jpeg"  filename is image name.
 
 ocrimgtoexcel can deal only one image.
 
-you can modiy baiduaip APP_ID='', API_KEY='', SECRET_KEY=''.
+## you must modify baiduaip APP_ID='', API_KEY='', SECRET_KEY=''.
 Or you can use you ocr api or tesserocr.function ocrclient.image_to_stringforcv2(roiimg) ,input image then return string.
