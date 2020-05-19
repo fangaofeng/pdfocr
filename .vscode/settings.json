@@ -1,0 +1,21 @@
+// 将设置放入此文件中以覆盖默认值和用户设置。
+{
+    
+    "python.venvPath": "E:\\pythonenv",
+    "python.venvFolders": ["36venv"],
+    "python.pythonPath": "e:\\pythonvenv\\36venv\\Scripts\\python.exe",
+    "python.formatting.provider": "autopep8",
+    "python.linting.pylintEnabled": true,
+    "python.linting.flake8Enabled": false,
+    "python.testing.pytestEnabled": false,
+    "files.autoSave": "afterDelay",
+    "python.testing.pytestArgs": [
+        "--exitfirst",
+        "--verbose"
+    ],
+    "python.linting.enabled": true,
+    "python.testing.promptToConfigure": false,
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+
+}
