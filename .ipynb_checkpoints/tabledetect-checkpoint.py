@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 
 import json
+from itertools import product
+from numba import jit
 
 
 class detectTable(object):
@@ -15,6 +17,7 @@ class detectTable(object):
         elif len(self.src_img.shape) == 3:
             self.gray_img = cv2.cvtColor(self.src_img, cv2.COLOR_BGR2GRAY)
 
+  
     def getmask(self, scale=15):
 
         thresh_img = cv2.adaptiveThreshold(
@@ -135,6 +138,7 @@ class detectTable(object):
                     endY = 0
         return y_count, y_segmentation
 
+ 
     def getShadowimg(self, img, line_count, HorV='H'):
         h, w = img.shape
         b = 255
@@ -201,25 +205,43 @@ class detectTable(object):
 
         return rows, colums
 
+
     def getLineCor(self, long, segmentation, next=False):
         line = []
-
+        tempsegmentation = []
         if next:
+            temp1 = [0]
+            temp2 = []
+
             for i, (start, end) in enumerate(segmentation):
-                if i+1 < len(segmentation):
-                    next_ = segmentation[i+1][0]
-                else:
-                    next_ = long-1
-                if (next_ - end) > 30:  # 过滤小的
-                    line.append(end+round((next_ - end)/2))
+                temp1.append(end)
+                temp2.append(start)
+            temp2.append(long)
+
+            for start, end in zip(temp1, temp2):
+                tempsegmentation.append((start, end))
         else:
-            for i, (start, end) in enumerate(segmentation):
-                line.append(start+round((end-start)/2))
+            tempsegmentation = segmentation
+        for i, (start, end) in enumerate(tempsegmentation):
+            line.append(start+round((end-start)/2))
+        if(len(line) == 0):
+            line.append(0)
+            line.append(long)
+        if(len(line) == 1):
+            line[0] = 0
+            line.append(long)
 
         return line
     # 返回多个table区域
 
-    def getTableRois(self, mask,minarea = 1000):
+    def LineToArea(self, line):
+        area = []
+        if len(line) <= 1:
+            return area
+        for i in len(line)-1:
+            area.append(line[i], line[i+1])
+
+    def getTableRois(self, mask, minarea=1000):
 
         image, contours, hierarchy = cv2.findContours(
             mask, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)

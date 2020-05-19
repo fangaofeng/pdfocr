@@ -463,17 +463,20 @@ class ImageProc:
             np.fromfile(img_path, dtype=np.uint8), cv2.IMREAD_UNCHANGED)
         return img_mat
 
-    @jit
+    
     def removeRedStamp(self, image=None, debug=False):
         # image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)# timg.jpeg
         #imgSkin = np.zeros(image.shape, np.uint8)
         if image is None:
             image = self.input_img
-        rows, cols, channels = image.shape
-        
+        img = image.copy()    
+        if len(self.input_img.shape) != 3:
+            return img, None
+        rows, cols = image.shape
         imgSkin = image.copy()
+        
         imgHsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        img = image.copy()
+        
         for r in range(rows):
             for c in range(cols):
 
@@ -608,7 +611,7 @@ class ImageProc:
 
         return image
 
-    @jit
+     
     def removeEllipseStamp(self, dstimg=None, pointsTheshold=100, areathreshold=1000.0, color=(255, 255, 255), debug=False):
 
         if dstimg is None:
@@ -646,7 +649,7 @@ class ImageProc:
         self.gray_img = dstimgT
         return dstimgT
 
-    @jit
+     
     def denoise(self, dstimg=None, debug=False):
         if dstimg is None:
             dstimgT = self.gray_img

@@ -17,7 +17,7 @@ class detectTable(object):
         elif len(self.src_img.shape) == 3:
             self.gray_img = cv2.cvtColor(self.src_img, cv2.COLOR_BGR2GRAY)
 
-    @jit
+  
     def getmask(self, scale=15):
 
         thresh_img = cv2.adaptiveThreshold(
@@ -138,7 +138,7 @@ class detectTable(object):
                     endY = 0
         return y_count, y_segmentation
 
-    @jit
+ 
     def getShadowimg(self, img, line_count, HorV='H'):
         h, w = img.shape
         b = 255
@@ -205,7 +205,7 @@ class detectTable(object):
 
         return rows, colums
 
-    @jit
+
     def getLineCor(self, long, segmentation, next=False):
         line = []
         tempsegmentation = []
